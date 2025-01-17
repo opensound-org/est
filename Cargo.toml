@@ -29,7 +29,7 @@ derive_more = { version = "1.0.0", features = ["display"] }
 indexmap = "2.7.0"
 ron = "0.8.1"
 serde = { version = "1.0.217", features = ["derive"] }
-thiserror = "2.0.10"
+thiserror = "2.0.11"
 tokio = { version = "1.43.0", features = ["rt"] }
 tokio-util = { version = "0.7.13", features = ["rt"] }
 
