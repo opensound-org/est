@@ -51,24 +51,28 @@ mod tests {
     #[tokio::test]
     async fn close_and_wait() {
         use std::time::Duration;
-        use tokio::time::timeout;
+        use tokio_util::time::FutureExt;
 
         let tracker = tracker_spawn();
-        assert!(timeout(Duration::from_secs_f64(1.5), tracker.wait())
+        assert!(tracker
+            .wait()
+            .timeout(Duration::from_secs_f64(1.5))
             .await
             .is_err());
 
         let tracker = tracker_spawn();
         tracker.close();
-        assert!(timeout(Duration::from_secs_f64(1.5), tracker.wait())
+        assert!(tracker
+            .wait()
+            .timeout(Duration::from_secs_f64(1.5))
             .await
             .is_ok());
 
         let tracker = tracker_spawn();
-        assert!(
-            timeout(Duration::from_secs_f64(1.5), tracker.close_and_wait())
-                .await
-                .is_ok()
-        );
+        assert!(tracker
+            .close_and_wait()
+            .timeout(Duration::from_secs_f64(1.5))
+            .await
+            .is_ok());
     }
 }
