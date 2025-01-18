@@ -6,6 +6,9 @@
 pub mod collections;
 /// Extensions to the [`std::result`](https://doc.rust-lang.org/stable/std/result/index.html) module.
 pub mod result;
+/// Extensions to the [`std::sync`](https://doc.rust-lang.org/stable/std/sync/index.html) &
+/// [`tokio::sync`](https://docs.rs/tokio/latest/tokio/sync/index.html) module.
+pub mod sync;
 /// Extensions to the [`std::task`](https://doc.rust-lang.org/stable/std/task/index.html) &
 /// [`tokio::task`](https://docs.rs/tokio/latest/tokio/task/index.html) module.
 pub mod task;
