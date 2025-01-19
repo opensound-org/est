@@ -118,6 +118,18 @@ impl OnceTrigger {
     pub fn trigger(self) -> bool {
         self.0.send(()).is_ok()
     }
+
+    pub async fn dropped(&mut self) {
+        self.0.closed().await
+    }
+
+    pub fn is_dropped(&self) -> bool {
+        self.0.is_closed()
+    }
+
+    pub fn poll_dropped(&mut self, cx: &mut Context<'_>) -> Poll<()> {
+        self.0.poll_closed(cx)
+    }
 }
 
 #[derive(Default, Debug, Copy, Clone, Eq, PartialEq, Hash)]
@@ -240,6 +252,42 @@ mod tests {
         let (trigger, waiter) = once_event();
         drop(trigger);
         assert_eq!(waiter.has_been_triggered(), Triggered::Dropped);
+    }
+
+    #[test]
+    fn is_dropped() {
+        let (trigger, waiter) = once_event();
+        assert!(!trigger.is_dropped());
+        drop(waiter);
+        assert!(trigger.is_dropped());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn dropped() {
+        let (mut trigger, waiter) = once_event();
+        assert!(!trigger.is_dropped());
+
+        tokio::spawn(async move {
+            drop(waiter);
+        });
+
+        trigger.dropped().await;
+        assert!(trigger.is_dropped());
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn poll_dropped() {
+        use std::future::poll_fn;
+
+        let (mut trigger, waiter) = once_event();
+        assert!(!trigger.is_dropped());
+
+        tokio::spawn(async move {
+            drop(waiter);
+        });
+
+        poll_fn(|cx| trigger.poll_dropped(cx)).await;
+        assert!(trigger.is_dropped());
     }
 
     #[tokio::test(flavor = "multi_thread")]
