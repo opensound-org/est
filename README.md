@@ -32,6 +32,7 @@ Latest version: [v0.6.1](https://github.com/opensound-org/est/releases/tag/v0.6.
 Some of the items are as follows:
 - [`AnyRes`](https://docs.rs/est/latest/est/result/type.AnyRes.html)
 - [`collections::MapExt::replace_key()`](https://docs.rs/est/latest/est/collections/trait.MapExt.html#tymethod.replace_key)
+- [`sync::once`](https://docs.rs/est/latest/est/sync/once/index.html)
 - [`task::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/trait.CloseAndWait.html#tymethod.close_and_wait)
 - [`task::TaskId`](https://docs.rs/est/latest/est/task/struct.TaskId.html)
 - [`thread::ThreadId`](https://docs.rs/est/latest/est/thread/struct.ThreadId.html)
