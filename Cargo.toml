@@ -26,7 +26,7 @@ all-features = true
 [dependencies]
 anyhow = "1.0.95"
 derive_more = { version = "1.0.0", features = ["display"] }
-indexmap = "2.7.0"
+indexmap = "2.7.1"
 ron = "0.8.1"
 serde = { version = "1.0.217", features = ["derive"] }
 thiserror = "2.0.11"
