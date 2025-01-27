@@ -78,6 +78,31 @@ pub trait FutureExt: Future + Sized {
 
 impl<T: Future + Sized> FutureExt for T {}
 
+/// Conversion into a [`Future`] with arguments.
+///
+/// By implementing [`IntoFutureWithArgs`] for a type, you define how it will be
+/// converted to a `Future` (for specific arguments).
+///
+/// Although this trait only accepts one argument, the argument can of course be a
+/// tuple containing multiple elements.
+///
+/// All functions and closures that accept a single argument and return `Future`
+/// (including `async fn` that accepts a single argument) automatically implement
+/// this trait.
+pub trait IntoFutureWithArgs<A, F: Future> {
+    fn into_future_with_args(self, args: A) -> F;
+}
+
+impl<T, A, F> IntoFutureWithArgs<A, F> for T
+where
+    T: FnOnce(A) -> F,
+    F: Future,
+{
+    fn into_future_with_args(self, args: A) -> F {
+        self(args)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -94,5 +119,26 @@ mod tests {
         let cancel = async move { sleep(Duration::from_millis(100)).await };
         let future = async move { sleep(Duration::from_millis(50)).await };
         assert!(future.with_cancel_signal(cancel).await.is_ok());
+    }
+
+    #[tokio::test]
+    async fn into_future_with_args() {
+        async fn into_signal(num: i32) -> i32 {
+            num
+        }
+        async fn add((a, b): (i32, i32)) -> i32 {
+            a + b
+        }
+        async fn wait_signal<A, F: Future>(
+            signal: A,
+            into: impl IntoFutureWithArgs<A, F>,
+        ) -> F::Output {
+            into.into_future_with_args(signal).await
+        }
+
+        assert_eq!(into_signal.into_future_with_args(42).await, 42);
+        assert_eq!(add.into_future_with_args((40, 2)).await, 42);
+        assert_eq!(wait_signal(42, into_signal).await, 42);
+        assert_eq!(wait_signal((40, 2), add).await, 42);
     }
 }
