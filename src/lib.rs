@@ -4,6 +4,8 @@
 
 /// Extensions to the [`std::collections`](https://doc.rust-lang.org/stable/std/collections/index.html) module.
 pub mod collections;
+/// Extensions to the [`std::future`](https://doc.rust-lang.org/stable/std/future/index.html) module.
+pub mod future;
 /// Extensions to the [`std::result`](https://doc.rust-lang.org/stable/std/result/index.html) module.
 pub mod result;
 /// Extensions to the [`std::sync`](https://doc.rust-lang.org/stable/std/sync/index.html) &

@@ -32,6 +32,7 @@
 部分条目如下：
 - [`AnyRes`](https://docs.rs/est/latest/est/result/type.AnyRes.html)
 - [`collections::MapExt::replace_key()`](https://docs.rs/est/latest/est/collections/trait.MapExt.html#tymethod.replace_key)
+- [`future::FutureExt::with_cancel_signal()`](https://docs.rs/est/latest/est/future/trait.FutureExt.html#tymethod.with_cancel_signal)
 - [`sync::once`](https://docs.rs/est/latest/est/sync/once/index.html)
 - [`task::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/trait.CloseAndWait.html#tymethod.close_and_wait)
 - [`task::TaskId`](https://docs.rs/est/latest/est/task/struct.TaskId.html)
