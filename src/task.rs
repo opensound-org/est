@@ -1,7 +1,7 @@
 use derive_more::Display;
 use serde::{Deserialize, Serialize};
 use std::num::NonZeroU64;
-use tokio_util::task::{task_tracker::TaskTrackerWaitFuture, TaskTracker};
+use tokio_util::task::{TaskTracker, task_tracker::TaskTrackerWaitFuture};
 
 /// A [`TaskId`](https://docs.rs/tokio/latest/tokio/task/struct.Id.html) that can be `serde`.
 #[derive(Debug, Display, Serialize, Deserialize, Copy, Clone, Eq, PartialEq, Hash)]
@@ -54,25 +54,31 @@ mod tests {
         use tokio_util::time::FutureExt;
 
         let tracker = tracker_spawn();
-        assert!(tracker
-            .wait()
-            .timeout(Duration::from_secs_f64(1.5))
-            .await
-            .is_err());
+        assert!(
+            tracker
+                .wait()
+                .timeout(Duration::from_secs_f64(1.5))
+                .await
+                .is_err()
+        );
 
         let tracker = tracker_spawn();
         tracker.close();
-        assert!(tracker
-            .wait()
-            .timeout(Duration::from_secs_f64(1.5))
-            .await
-            .is_ok());
+        assert!(
+            tracker
+                .wait()
+                .timeout(Duration::from_secs_f64(1.5))
+                .await
+                .is_ok()
+        );
 
         let tracker = tracker_spawn();
-        assert!(tracker
-            .close_and_wait()
-            .timeout(Duration::from_secs_f64(1.5))
-            .await
-            .is_ok());
+        assert!(
+            tracker
+                .close_and_wait()
+                .timeout(Duration::from_secs_f64(1.5))
+                .await
+                .is_ok()
+        );
     }
 }

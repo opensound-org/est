@@ -117,7 +117,7 @@ use std::{
     pin::Pin,
     task::{Context, Poll},
 };
-use tokio::sync::oneshot::{channel, error::TryRecvError, Receiver, Sender};
+use tokio::sync::oneshot::{Receiver, Sender, channel, error::TryRecvError};
 
 /// Triggers the event to the associated [`OnceWaiter`].
 ///

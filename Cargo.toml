@@ -11,14 +11,14 @@ homepage = "https://github.com/opensound-org/est"
 description = """
 Extensions for the rust Standard library and Tokio.
 """
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-# Because we used `rustc-check-cfg` in build script
-# 因为我们在构建脚本中使用了`rustc-check-cfg`
-# https://blog.rust-lang.org/2024/05/06/check-cfg.html
-rust-version = "1.80.0"
+# Because we are using 2024 Edition.
+# 因为我们正在使用2024 Edition。
+# https://blog.rust-lang.org/2025/02/20/Rust-1.85.0.html
+rust-version = "1.85.0"
 
 [package.metadata.docs.rs]
 all-features = true
