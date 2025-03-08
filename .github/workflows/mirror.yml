@@ -9,12 +9,6 @@ jobs:
         fetch-depth: 0
     - uses: yesolutions/mirror-action@master
       with:
-        REMOTE: 'https://gitea.29bot.com/opensound-org/est.git'
-        REMOTE_NAME: gitea
-        GIT_USERNAME: 29bot
-        GIT_PASSWORD: ${{ secrets.GITEA_PASSWORD }}
-    - uses: yesolutions/mirror-action@master
-      with:
         REMOTE: 'https://gitee.com/opensound-org/est.git'
         REMOTE_NAME: gitee
         GIT_USERNAME: czy29
