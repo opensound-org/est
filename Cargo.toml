@@ -30,11 +30,11 @@ indexmap = "2.7.1"
 ron = "0.8.1"
 serde = { version = "1.0.218", features = ["derive"] }
 thiserror = "2.0.12"
-tokio = { version = "1.43.0", features = ["rt", "sync"] }
+tokio = { version = "1.44.0", features = ["rt", "sync"] }
 tokio-util = { version = "0.7.13", features = ["rt"] }
 
 [dev-dependencies]
-tokio = { version = "1.43.0", features = ["macros", "rt-multi-thread", "test-util", "time"] }
+tokio = { version = "1.44.0", features = ["macros", "rt-multi-thread", "test-util", "time"] }
 tokio-util = { version = "0.7.13", features = ["time"] }
 
 [build-dependencies]
