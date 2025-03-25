@@ -27,7 +27,7 @@ all-features = true
 anyhow = "1.0.97"
 derive_more = { version = "2.0.1", features = ["display"] }
 indexmap = "2.8.0"
-ron = "0.8.1"
+ron = "0.9.0"
 serde = { version = "1.0.218", features = ["derive"] }
 thiserror = "2.0.12"
 tokio = { version = "1.44.0", features = ["rt", "sync"] }
