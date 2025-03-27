@@ -1,10 +1,12 @@
-use indexmap::{Equivalent, IndexMap};
+use indexmap::Equivalent;
 use std::{
     borrow::Borrow,
     collections::{BTreeMap, HashMap},
     hash::{BuildHasher, Hash},
 };
 use thiserror::Error;
+
+pub use indexmap::IndexMap;
 
 /// Error returned by `MapExt::replace_key`.
 #[derive(Error, Debug, Copy, Clone, Eq, PartialEq, Hash)]
