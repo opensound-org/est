@@ -1,4 +1,6 @@
-use tokio_util::task::{TaskTracker, task_tracker::TaskTrackerWaitFuture};
+use tokio_util::task::task_tracker::TaskTrackerWaitFuture;
+
+pub use tokio_util::task::TaskTracker;
 
 /// Execute [`close`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html#method.close)
 /// and [`wait`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html#method.wait)
