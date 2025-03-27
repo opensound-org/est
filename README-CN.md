@@ -35,7 +35,7 @@
 - [`future::FutureExt::with_cancel_signal()`](https://docs.rs/est/latest/est/future/trait.FutureExt.html#tymethod.with_cancel_signal)
 - [`future::IntoFutureWithArgs`](https://docs.rs/est/latest/est/future/trait.IntoFutureWithArgs.html)
 - [`sync::once`](https://docs.rs/est/latest/est/sync/once/index.html)
-- [`task::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/trait.CloseAndWait.html#tymethod.close_and_wait)
+- [`task::task_tracker::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/task_tracker/trait.CloseAndWait.html#tymethod.close_and_wait)
 - [`task::TaskId`](https://docs.rs/est/latest/est/task/struct.TaskId.html)
 - [`thread::ThreadId`](https://docs.rs/est/latest/est/thread/struct.ThreadId.html)
 
