@@ -1,11 +1,13 @@
-/// Extensions to [`tokio-util::task::TaskTracker`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html)
+/// Extensions to [`tokio_util::task::TaskTracker`]
 pub mod task_tracker;
 
 use derive_more::Display;
 use serde::{Deserialize, Serialize};
 use std::num::NonZeroU64;
 
-/// A [`TaskId`](https://docs.rs/tokio/latest/tokio/task/struct.Id.html) that can be `serde`.
+/// A [`TaskId`] that can be `serde`.
+///
+/// [`TaskId`]: tokio::task::Id
 #[derive(Debug, Display, Serialize, Deserialize, Copy, Clone, Eq, PartialEq, Hash)]
 #[serde(transparent)]
 pub struct TaskId(pub NonZeroU64);

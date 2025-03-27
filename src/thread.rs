@@ -2,7 +2,9 @@ use derive_more::Display;
 use serde::{Deserialize, Serialize};
 use std::num::NonZeroU64;
 
-/// A [`ThreadId`](https://doc.rust-lang.org/stable/std/thread/struct.ThreadId.html) that can be `serde` and `Display`ed
+/// A [`ThreadId`] that can be `serde` and `Display`ed.
+///
+/// [`ThreadId`]: std::thread::ThreadId
 #[derive(Debug, Display, Serialize, Deserialize, Copy, Clone, Eq, PartialEq, Hash)]
 #[serde(transparent)]
 pub struct ThreadId(pub NonZeroU64);

@@ -1,9 +1,9 @@
 //! A simple one-time channel that can `trigger` and `wait` on a single
 //! `"untyped event"` between two tasks.
 //!
-//! Can be regarded as a thin wrapper layer over
-//! [`tokio::sync::oneshot<()>`](https://docs.rs/tokio/latest/tokio/sync/oneshot/index.html)
-//! channel.
+//! Can be regarded as a thin wrapper layer over [`tokio::sync::oneshot<()>`] channel.
+//!
+//! [`tokio::sync::oneshot<()>`]: tokio::sync::oneshot
 //!
 //! This is a simple one-time single event synchronization primitive, which consists of an
 //! exclusive pair of a single `trigger` and a single `waiter`.
@@ -49,8 +49,7 @@
 //! }
 //! ```
 //!
-//! To use a [`OnceWaiter`] in a [`tokio::select!`](https://docs.rs/tokio/latest/tokio/macro.select.html)
-//! loop, add `&mut` in front of the waiter.
+//! To use a [`OnceWaiter`] in a [`tokio::select!`] loop, add `&mut` in front of the waiter.
 //!
 //! ```
 //! use est::sync::once::once_event;
@@ -420,8 +419,7 @@ pub enum Triggered {
 /// }
 /// ```
 ///
-/// To use a [`OnceWaiter`] in a [`tokio::select!`](https://docs.rs/tokio/latest/tokio/macro.select.html)
-/// loop, add `&mut` in front of the waiter.
+/// To use a [`OnceWaiter`] in a [`tokio::select!`] loop, add `&mut` in front of the waiter.
 ///
 /// ```
 /// use est::sync::once::once_event;

@@ -17,10 +17,7 @@ pub enum ReplaceKeyErr {
     NewKeyOccupied,
 }
 
-/// Some general extensions to `Maps` (such as
-/// [`HashMap`](https://doc.rust-lang.org/stable/std/collections/struct.HashMap.html),
-/// [`BTreeMap`](https://doc.rust-lang.org/stable/std/collections/struct.BTreeMap.html),
-/// [`IndexMap`](https://docs.rs/indexmap/latest/indexmap/map/struct.IndexMap.html)).
+/// Some general extensions to `Maps` (such as [`HashMap`], [`BTreeMap`], [`IndexMap`]).
 pub trait MapExt<K, Q: ?Sized = K> {
     /// Replace an existing key with a new (non-existing) one.
     ///

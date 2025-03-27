@@ -2,9 +2,10 @@ use tokio_util::task::task_tracker::TaskTrackerWaitFuture;
 
 pub use tokio_util::task::TaskTracker;
 
-/// Execute [`close`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html#method.close)
-/// and [`wait`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html#method.wait)
-/// for [`TaskTracker`](https://docs.rs/tokio-util/latest/tokio_util/task/task_tracker/struct.TaskTracker.html) at once.
+/// Execute [`close`] and [`wait`] for [`TaskTracker`] at once.
+///
+/// [`close`]: TaskTracker::close
+/// [`wait`]: TaskTracker::wait
 pub trait CloseAndWait {
     fn close_and_wait(&self) -> TaskTrackerWaitFuture;
 }
