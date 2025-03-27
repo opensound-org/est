@@ -2,6 +2,8 @@
 
 //! **E**xtensions for the rust **S**tandard library and **T**okio.
 
+pub use tokio;
+
 /// Extensions to the [`std::collections`](https://doc.rust-lang.org/stable/std/collections/index.html) module.
 pub mod collections;
 /// Extensions to the [`std::future`](https://doc.rust-lang.org/stable/std/future/index.html) module.
