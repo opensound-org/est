@@ -472,6 +472,15 @@ impl OnceWaiter {
     /// next call to `triggered` will also correctly return the corresponding
     /// [`Triggered::Triggered`] or [`Triggered::Dropped`] value.
     ///
+    /// Once this method is called once, the asynchronous wake-up is canceled. This
+    /// means that even if the event has not been triggered and [`OnceTrigger`] has
+    /// not been dropped (meaning that this method returns [`Triggered::Pending`]),
+    /// the current asynchronous task **will not** be awakened in the future when
+    /// the event is triggered or [`OnceTrigger`] is dropped. At this time, you need
+    /// to continue calling this method to get the trigger or drop event. This also
+    /// means that, generally speaking, you can only choose between `synchronous`
+    /// and `asynchronous` usage, but not both.
+    ///
     /// # Return
     ///
     /// - [`Triggered::Pending`] if the `trigger` has not been dropped, and has
