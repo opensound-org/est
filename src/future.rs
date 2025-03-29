@@ -86,8 +86,10 @@ impl<T: Future + Sized> FutureExt for T {}
 /// tuple containing multiple elements.
 ///
 /// All functions and closures that accept a single argument and return `Future`
-/// (including `async fn` that accepts a single argument) automatically implement
-/// this trait.
+/// (including `async fn` and [`async closure`] that accepts a single argument)
+/// automatically implement this trait.
+///
+/// [`async closure`]: https://rust-lang.github.io/rfcs/3668-async-closures.html
 pub trait IntoFutureWithArgs<A, F: Future> {
     fn into_future_with_args(self, args: A) -> F;
 }
@@ -137,7 +139,34 @@ mod tests {
 
         assert_eq!(into_signal.into_future_with_args(42).await, 42);
         assert_eq!(add.into_future_with_args((40, 2)).await, 42);
+
+        assert_eq!(
+            (|num| async move { num }).into_future_with_args(42).await,
+            42
+        );
+        assert_eq!(
+            (|(a, b)| async move { a + b })
+                .into_future_with_args((40, 2))
+                .await,
+            42
+        );
+
+        assert_eq!((async |num| num).into_future_with_args(42).await, 42);
+        assert_eq!(
+            (async |(a, b)| a + b).into_future_with_args((40, 2)).await,
+            42
+        );
+
         assert_eq!(wait_signal(42, into_signal).await, 42);
         assert_eq!(wait_signal((40, 2), add).await, 42);
+
+        assert_eq!(wait_signal(42, |num| async move { num }).await, 42);
+        assert_eq!(
+            wait_signal((40, 2), |(a, b)| async move { a + b }).await,
+            42
+        );
+
+        assert_eq!(wait_signal(42, async |num| num).await, 42);
+        assert_eq!(wait_signal((40, 2), async |(a, b)| a + b).await, 42);
     }
 }
