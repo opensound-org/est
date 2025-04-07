@@ -1,4 +1,4 @@
-/// Extensions to [`tokio_util::task::TaskTracker`]
+/// Extensions to [`tokio_util::task::TaskTracker`].
 pub mod task_tracker;
 
 use derive_more::Display;
