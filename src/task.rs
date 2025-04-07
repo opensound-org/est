@@ -1,9 +1,13 @@
+/// Asynchronous tasks that can be gracefully shutdown.
+pub mod graceful;
 /// Extensions to [`tokio_util::task::TaskTracker`].
 pub mod task_tracker;
 
 use derive_more::Display;
 use serde::{Deserialize, Serialize};
 use std::num::NonZeroU64;
+
+pub use graceful::GracefulTask;
 
 /// A [`TaskId`] that can be `serde`.
 ///

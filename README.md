@@ -37,6 +37,7 @@ Some of the items are as follows:
 - [`process::Command`](https://docs.rs/est/latest/est/process/enum.Command.html)
 - [`sync::once`](https://docs.rs/est/latest/est/sync/once/index.html)
 - [`task::task_tracker::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/task_tracker/trait.CloseAndWait.html#tymethod.close_and_wait)
+- [`task::GracefulTask`](https://docs.rs/est/latest/est/task/graceful/struct.GracefulTask.html)
 - [`task::TaskId`](https://docs.rs/est/latest/est/task/struct.TaskId.html)
 - [`thread::ThreadId`](https://docs.rs/est/latest/est/thread/struct.ThreadId.html)
 
