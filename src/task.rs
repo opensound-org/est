@@ -1,4 +1,3 @@
-/// Asynchronous tasks that can be gracefully shutdown.
 pub mod graceful;
 /// Extensions to [`tokio_util::task::TaskTracker`].
 pub mod task_tracker;
