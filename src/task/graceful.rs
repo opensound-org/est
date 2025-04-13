@@ -233,6 +233,9 @@ impl<T> GracefulTaskBuilder<T> {
 
 /// The handle and entry type of asynchronous tasks that can be shutdown gracefully.
 ///
+/// This type is very similar to [`tokio::task::JoinHandle`], but the difference is that it can
+/// gracefully shutdown instead of directly abort.
+///
 /// Awaiting on it can obtain the [`TaskOutput`].
 ///
 /// # Examples
