@@ -190,6 +190,18 @@ impl<T> GracefulTaskBuilder<T> {
         F: Future<Output = T> + Send + 'static,
         T: Send + 'static,
     {
+        self.spawn_ctrlc_mocked(ifwa, async move {
+            ctrl_c().await.ok();
+        })
+    }
+
+    fn spawn_ctrlc_mocked<I, F, C>(self, ifwa: I, ctrlc: C) -> GracefulTask<T>
+    where
+        I: IntoFutureWithArgs<ShutdownReceiver, F>,
+        F: Future<Output = T> + Send + 'static,
+        C: Future<Output = ()> + Send + 'static,
+        T: Send + 'static,
+    {
         let ctrlc_shutdown = self.ctrlc_shutdown;
         let (sender, recver) = channel(None);
         let (trigger, waiter) = once_event();
@@ -201,7 +213,7 @@ impl<T> GracefulTaskBuilder<T> {
         let graceful = trigger.clone();
         let task = tokio::spawn(async move {
             let (finish_mode, join_result) = tokio::select! {
-                _ = ctrl_c(), if ctrlc_shutdown => {
+                _ = ctrlc, if ctrlc_shutdown => {
                     trigger.trigger();
                     let kind = GracefulKind::CtrlC;
                     sender.send(Some(kind)).ok();
