@@ -24,7 +24,7 @@ rust-version = "1.85.0"
 all-features = true
 
 [dependencies]
-anyhow = "1.0.97"
+anyhow = "1.0.98"
 derive_more = { version = "2.0.1", features = ["display"] }
 indexmap = "2.9.0"
 ron = "0.9.0"
