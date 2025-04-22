@@ -135,7 +135,7 @@ impl ShutdownReceiver {
 
 impl IntoFuture for ShutdownReceiver {
     type Output = GracefulKind;
-    type IntoFuture = Pin<Box<dyn Future<Output = Self::Output>>>;
+    type IntoFuture = Pin<Box<dyn Future<Output = Self::Output> + Send>>;
 
     fn into_future(mut self) -> Self::IntoFuture {
         Box::pin(async move { self.recv().await })
@@ -393,8 +393,8 @@ mod tests {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn trigger_graceful_shutdown() {
-        let mut graceful_task = GracefulTask::builder_default()
-            .spawn(async |mut shutdown: ShutdownReceiver| shutdown.recv().await);
+        let mut graceful_task =
+            GracefulTask::builder_default().spawn(async |shutdown| shutdown.await);
         assert!(graceful_task.trigger_graceful_shutdown());
         let task_output = (&mut graceful_task).await;
         assert!(graceful_task.is_finished());
@@ -404,8 +404,8 @@ mod tests {
         );
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::Explicit);
 
-        let mut graceful_task = GracefulTask::builder_default()
-            .spawn(async |mut shutdown: ShutdownReceiver| shutdown.recv().await);
+        let mut graceful_task =
+            GracefulTask::builder_default().spawn(async |shutdown| shutdown.await);
         assert!(graceful_task.trigger_graceful_shutdown());
         assert!(!graceful_task.trigger_graceful_shutdown());
         let task_output = (&mut graceful_task).await;
@@ -419,10 +419,7 @@ mod tests {
         let (trigger, ctrlc) = ctrlc_mocked();
         let mut graceful_task = GracefulTask::builder_default()
             .ctrlc_shutdown()
-            .spawn_ctrlc_mocked(
-                async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-                ctrlc,
-            );
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(graceful_task.trigger_graceful_shutdown());
         sleep().await;
         assert!(!trigger.trigger());
@@ -437,10 +434,7 @@ mod tests {
         let (trigger, ctrlc) = ctrlc_mocked();
         let mut graceful_task = GracefulTask::builder_default()
             .ctrlc_shutdown()
-            .spawn_ctrlc_mocked(
-                async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-                ctrlc,
-            );
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(trigger.trigger());
         sleep().await;
         assert!(!graceful_task.trigger_graceful_shutdown());
@@ -453,10 +447,8 @@ mod tests {
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::CtrlC);
 
         let (trigger, ctrlc) = ctrlc_mocked();
-        let mut graceful_task = GracefulTask::builder_default().spawn_ctrlc_mocked(
-            async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-            ctrlc,
-        );
+        let mut graceful_task = GracefulTask::builder_default()
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(!trigger.trigger());
         sleep().await;
         assert!(graceful_task.trigger_graceful_shutdown());
@@ -491,8 +483,8 @@ mod tests {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn shutdown_trigger() {
-        let mut graceful_task = GracefulTask::builder_default()
-            .spawn(async |mut shutdown: ShutdownReceiver| shutdown.recv().await);
+        let mut graceful_task =
+            GracefulTask::builder_default().spawn(async |shutdown| shutdown.await);
         assert!(graceful_task.shutdown_handle().trigger());
         let task_output = (&mut graceful_task).await;
         assert!(graceful_task.is_finished());
@@ -502,8 +494,8 @@ mod tests {
         );
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::Explicit);
 
-        let mut graceful_task = GracefulTask::builder_default()
-            .spawn(async |mut shutdown: ShutdownReceiver| shutdown.recv().await);
+        let mut graceful_task =
+            GracefulTask::builder_default().spawn(async |shutdown| shutdown.await);
         let trigger1 = graceful_task.shutdown_handle();
         let trigger2 = graceful_task.shutdown_handle();
         let trigger1 = tokio::spawn(async move { trigger1.trigger() });
@@ -517,8 +509,8 @@ mod tests {
         );
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::Explicit);
 
-        let mut graceful_task = GracefulTask::builder_default()
-            .spawn(async |mut shutdown: ShutdownReceiver| shutdown.recv().await);
+        let mut graceful_task =
+            GracefulTask::builder_default().spawn(async |shutdown| shutdown.await);
         assert!(graceful_task.shutdown_handle().trigger());
         assert!(!graceful_task.shutdown_handle().trigger());
         let task_output = (&mut graceful_task).await;
@@ -532,10 +524,7 @@ mod tests {
         let (trigger, ctrlc) = ctrlc_mocked();
         let mut graceful_task = GracefulTask::builder_default()
             .ctrlc_shutdown()
-            .spawn_ctrlc_mocked(
-                async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-                ctrlc,
-            );
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(graceful_task.shutdown_handle().trigger());
         sleep().await;
         assert!(!trigger.trigger());
@@ -550,10 +539,7 @@ mod tests {
         let (trigger, ctrlc) = ctrlc_mocked();
         let mut graceful_task = GracefulTask::builder_default()
             .ctrlc_shutdown()
-            .spawn_ctrlc_mocked(
-                async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-                ctrlc,
-            );
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(trigger.trigger());
         sleep().await;
         assert!(!graceful_task.shutdown_handle().trigger());
@@ -566,10 +552,8 @@ mod tests {
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::CtrlC);
 
         let (trigger, ctrlc) = ctrlc_mocked();
-        let mut graceful_task = GracefulTask::builder_default().spawn_ctrlc_mocked(
-            async |mut shutdown: ShutdownReceiver| shutdown.recv().await,
-            ctrlc,
-        );
+        let mut graceful_task = GracefulTask::builder_default()
+            .spawn_ctrlc_mocked(async |shutdown| shutdown.await, ctrlc);
         assert!(!trigger.trigger());
         sleep().await;
         assert!(graceful_task.shutdown_handle().trigger());
