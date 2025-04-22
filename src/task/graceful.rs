@@ -460,13 +460,13 @@ mod tests {
         );
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::Explicit);
 
-        let mut graceful_task = GracefulTask::builder_default().spawn(async |_| ());
+        let mut graceful_task = GracefulTask::builder_default().spawn(async |_| 42);
         sleep().await;
         assert!(!graceful_task.trigger_graceful_shutdown());
         let task_output = (&mut graceful_task).await;
         assert!(graceful_task.is_finished());
         assert_eq!(task_output.finish_mode, FinishMode::Complete);
-        assert_eq!(task_output.join_result.unwrap(), ());
+        assert_eq!(task_output.join_result.unwrap(), 42);
 
         let mut graceful_task =
             GracefulTask::builder_default().spawn(async |_| sleep_double().await);
@@ -565,13 +565,13 @@ mod tests {
         );
         assert_eq!(task_output.join_result.unwrap(), GracefulKind::Explicit);
 
-        let mut graceful_task = GracefulTask::builder_default().spawn(async |_| ());
+        let mut graceful_task = GracefulTask::builder_default().spawn(async |_| 42);
         sleep().await;
         assert!(!graceful_task.shutdown_handle().trigger());
         let task_output = (&mut graceful_task).await;
         assert!(graceful_task.is_finished());
         assert_eq!(task_output.finish_mode, FinishMode::Complete);
-        assert_eq!(task_output.join_result.unwrap(), ());
+        assert_eq!(task_output.join_result.unwrap(), 42);
 
         let mut graceful_task =
             GracefulTask::builder_default().spawn(async |_| sleep_double().await);
