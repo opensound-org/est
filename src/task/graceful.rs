@@ -15,15 +15,12 @@ use serde::{Deserialize, Serialize};
 use std::{
     marker::PhantomData,
     pin::Pin,
-    sync::Arc,
+    sync::{Arc, Mutex},
     task::{Context, Poll},
 };
 use tokio::{
     signal::ctrl_c,
-    sync::{
-        Mutex,
-        watch::{Receiver, channel},
-    },
+    sync::watch::{Receiver, channel},
     task::{JoinError, JoinHandle},
 };
 
