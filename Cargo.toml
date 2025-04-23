@@ -24,18 +24,51 @@ rust-version = "1.85.0"
 all-features = true
 
 [dependencies]
-anyhow = "1.0.98"
-derive_more = { version = "2.0.1", features = ["display"] }
-indexmap = "2.9.0"
-ron = "0.10.1"
-serde = { version = "1.0.219", features = ["derive"] }
-thiserror = "2.0.12"
-tokio = { version = "1.44.2", features = ["macros", "process", "rt", "signal", "sync"] }
-tokio-util = { version = "0.7.15", features = ["rt"] }
+anyhow = { version = "1.0.98", optional = true }
+derive_more = { version = "2.0.1", features = ["display"], optional = true }
+indexmap = { version = "2.9.0", optional = true }
+ron = { version = "0.10.1", optional = true }
+serde = { version = "1.0.219", features = ["derive"], optional = true }
+thiserror = { version = "2.0.12", optional = true }
+tokio = { version = "1.44.2", features = ["macros"], optional = true }
+tokio-util = { version = "0.7.15", features = ["rt"], optional = true }
 
 [dev-dependencies]
-tokio = { version = "1.44.2", features = ["rt-multi-thread", "test-util", "time"] }
+tokio = { version = "1.44.2", features = ["macros", "rt-multi-thread", "test-util", "time"] }
 tokio-util = { version = "0.7.14", features = ["time"] }
 
 [build-dependencies]
 version_check = "0.9.5"
+
+[features]
+# Please only remove this comment during the development phase.
+# 请只在开发阶段解除此注释。
+# default = ["full"]
+
+full = [
+  "collections",
+  "future",
+  "process",
+  "result",
+  "sync",
+  "task",
+  "thread",
+
+  "signal",
+  "task_tracker",
+  "indexmap",
+  "serde",
+]
+
+collections = ["dep:thiserror"]
+future = []
+process = ["tokio/process"]
+result = ["dep:anyhow"]
+sync = ["tokio/sync"]
+task = ["future", "sync", "dep:derive_more", "tokio/rt"]
+thread = ["dep:derive_more", "dep:ron"]
+
+signal = ["tokio/signal"]
+task_tracker = ["dep:tokio-util"]
+indexmap = ["dep:indexmap"]
+serde = ["dep:serde"]

@@ -1,3 +1,4 @@
+#[cfg(feature = "indexmap")]
 use indexmap::Equivalent;
 use std::{
     borrow::Borrow,
@@ -6,6 +7,7 @@ use std::{
 };
 use thiserror::Error;
 
+#[cfg(feature = "indexmap")]
 pub use indexmap::IndexMap;
 
 /// Error returned by `MapExt::replace_key`.
@@ -84,6 +86,7 @@ where
     }
 }
 
+#[cfg(feature = "indexmap")]
 impl<K, Q, V, S> MapExt<K, Q> for IndexMap<K, V, S>
 where
     K: Borrow<Q> + Hash + Eq,
@@ -193,6 +196,7 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "indexmap")]
     fn replace_key_indexmap() {
         let mut map = indexmap::indexmap! {
             "k1".to_string() => 123,
