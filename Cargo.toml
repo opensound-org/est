@@ -31,7 +31,7 @@ ron = "0.10.1"
 serde = { version = "1.0.219", features = ["derive"] }
 thiserror = "2.0.12"
 tokio = { version = "1.44.2", features = ["macros", "process", "rt", "signal", "sync"] }
-tokio-util = { version = "0.7.14", features = ["rt"] }
+tokio-util = { version = "0.7.15", features = ["rt"] }
 
 [dev-dependencies]
 tokio = { version = "1.44.2", features = ["rt-multi-thread", "test-util", "time"] }
