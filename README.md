@@ -6,7 +6,7 @@ English | [简体中文](README-CN.md)
 
 **E**xtensions for the rust **S**tandard library and **T**okio
 
-[Website](https://opensound.run) | [crates.io](https://crates.io/crates/est) | [docs.rs](https://docs.rs/est/latest/est)
+[Website](https://opensound.run) | [crates.io](https://crates.io/crates/est) | [docs.rs](https://docs.rs/est/latest/est) | [Changelog](CHANGELOG.md)
 
 Original Author: [@czy-29](https://github.com/czy-29)
 

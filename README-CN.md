@@ -6,7 +6,7 @@
 
 对 rust **标**准库 和 **T**okio 的 **扩**展
 
-[官网](https://opensound.run) | [crates.io](https://crates.io/crates/est) | [docs.rs](https://docs.rs/est/latest/est)
+[官网](https://opensound.run) | [crates.io](https://crates.io/crates/est) | [docs.rs](https://docs.rs/est/latest/est) | [更新日志](CHANGELOG.md)
 
 原始作者：[@czy-29](https://github.com/czy-29)
 
