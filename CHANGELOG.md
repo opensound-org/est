@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.9.0 - 2025-04-25
+
 ### Added
 
 - (collections): Re-exports `indexmap::IndexMap` ([5155f2](https://github.com/opensound-org/est/commit/5155f29a71a740e2c4fbfa4939a3bb595cbc2486))
