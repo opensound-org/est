@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Fixed
+
+- Fix inconsistent dependency versions ([](https://github.com/opensound-org/est/commit/))
+
 ## 0.9.0 - 2025-04-25
 
 ### Added

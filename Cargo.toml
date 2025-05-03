@@ -35,7 +35,7 @@ tokio-util = { version = "0.7.15", features = ["rt"], optional = true }
 
 [dev-dependencies]
 tokio = { version = "1.44.2", features = ["macros", "rt-multi-thread", "test-util", "time"] }
-tokio-util = { version = "0.7.14", features = ["time"] }
+tokio-util = { version = "0.7.15", features = ["time"] }
 
 [build-dependencies]
 version_check = "0.9.5"
