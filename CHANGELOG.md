@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix inconsistent dependency versions ([](https://github.com/opensound-org/est/commit/))
 
+### Docs
+
+- (README): Add `DeepWiki` badge ([](https://github.com/opensound-org/est/commit/))
+
 ### Deps
 
 - Upgrade `tokio` to `1.45.0` ([](https://github.com/opensound-org/est/commit/))

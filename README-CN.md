@@ -12,6 +12,7 @@
 
 最新版本：[v0.9.0](https://github.com/opensound-org/est/releases/tag/v0.9.0)
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/opensound-org/est)
 ![Crates.io Total Downloads](https://img.shields.io/crates/d/est)
 [![Crates.io Dependents](https://img.shields.io/crates/dependents/est)](https://crates.io/crates/est/reverse_dependencies)
 ![GitHub Repo stars](https://img.shields.io/github/stars/opensound-org/est)
