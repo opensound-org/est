@@ -170,33 +170,48 @@ impl From<Command> for TokioCommand {
 
 impl Clone for Command {
     fn clone(&self) -> Self {
-        let kill_on_drop = self.as_tokio().map(TokioCommand::get_kill_on_drop);
-        let cmd = self.as_std();
-        let mut cloned = StdCommand::new(cmd.get_program());
-
-        cloned.args(cmd.get_args());
-
-        for (k, v) in cmd.get_envs() {
-            match v {
-                Some(v) => cloned.env(k, v),
-                None => cloned.env_remove(k),
-            };
-        }
-
-        if let Some(current_dir) = cmd.get_current_dir() {
-            cloned.current_dir(current_dir);
-        }
-
-        match kill_on_drop {
-            None => cloned.into(),
-            Some(kill_on_drop) => {
-                let mut cmd: TokioCommand = cloned.into();
-
-                if kill_on_drop {
-                    cmd.kill_on_drop(true);
+        match self {
+            Self::Std(std_cmd) => {
+                // Direct cloning for std::process::Command
+                let mut cloned = StdCommand::new(std_cmd.get_program());
+                cloned.args(std_cmd.get_args());
+                
+                // Batch process environment variables
+                cloned.envs(std_cmd.get_envs().filter_map(|(k, v)| v.map(|v| (k, v))));
+                for (k, _) in std_cmd.get_envs().filter(|(_, v)| v.is_none()) {
+                    cloned.env_remove(k);
                 }
 
-                cmd.into()
+                if let Some(current_dir) = std_cmd.get_current_dir() {
+                    cloned.current_dir(current_dir);
+                }
+
+                Self::Std(cloned)
+            }
+            Self::Tokio(tokio_cmd) => {
+                // For tokio commands, preserve kill_on_drop setting
+                let kill_on_drop = tokio_cmd.get_kill_on_drop();
+                let std_cmd = tokio_cmd.as_std();
+                
+                let mut cloned = StdCommand::new(std_cmd.get_program());
+                cloned.args(std_cmd.get_args());
+                
+                // Batch process environment variables
+                cloned.envs(std_cmd.get_envs().filter_map(|(k, v)| v.map(|v| (k, v))));
+                for (k, _) in std_cmd.get_envs().filter(|(_, v)| v.is_none()) {
+                    cloned.env_remove(k);
+                }
+
+                if let Some(current_dir) = std_cmd.get_current_dir() {
+                    cloned.current_dir(current_dir);
+                }
+
+                let mut tokio_cloned: TokioCommand = cloned.into();
+                if kill_on_drop {
+                    tokio_cloned.kill_on_drop(true);
+                }
+
+                Self::Tokio(tokio_cloned)
             }
         }
     }

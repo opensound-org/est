@@ -43,7 +43,9 @@ where
     Q: Hash + Eq + ?Sized,
     S: BuildHasher,
 {
+    #[inline]
     fn replace_key(&mut self, k1: &Q, k2: K) -> Result<(), ReplaceKeyErr> {
+        // Check if old key exists first (required by API contract)
         if !self.contains_key(k1) {
             return Err(ReplaceKeyErr::OldKeyNotExist);
         }
@@ -52,11 +54,15 @@ where
             return Ok(());
         }
 
+        // Check if new key already exists
         if self.contains_key(k2.borrow()) {
             return Err(ReplaceKeyErr::NewKeyOccupied);
         }
 
-        let v = self.remove(k1).expect("this should be unreachable");
+        // Remove old key and get value
+        let v = self.remove(k1).unwrap(); // Safe because we checked existence above
+        
+        // Insert with new key
         self.insert(k2, v);
         Ok(())
     }
@@ -67,7 +73,9 @@ where
     K: Borrow<Q> + Ord,
     Q: Ord + ?Sized,
 {
+    #[inline]
     fn replace_key(&mut self, k1: &Q, k2: K) -> Result<(), ReplaceKeyErr> {
+        // Check if old key exists first (required by API contract)
         if !self.contains_key(k1) {
             return Err(ReplaceKeyErr::OldKeyNotExist);
         }
@@ -76,11 +84,15 @@ where
             return Ok(());
         }
 
+        // Check if new key already exists
         if self.contains_key(k2.borrow()) {
             return Err(ReplaceKeyErr::NewKeyOccupied);
         }
 
-        let v = self.remove(k1).expect("this should be unreachable");
+        // Remove old key and get value
+        let v = self.remove(k1).unwrap(); // Safe because we checked existence above
+        
+        // Insert with new key
         self.insert(k2, v);
         Ok(())
     }

@@ -223,6 +223,7 @@ impl OnceTrigger {
     ///     }
     /// }
     /// ```
+    #[inline]
     pub fn trigger(self) -> bool {
         self.0.send(()).is_ok()
     }
