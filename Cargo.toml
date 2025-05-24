@@ -36,6 +36,7 @@ tokio-util = { version = "0.7.15", features = ["rt"], optional = true }
 [dev-dependencies]
 tokio = { version = "1.45.0", features = ["macros", "rt-multi-thread", "test-util", "time"] }
 tokio-util = { version = "0.7.15", features = ["time"] }
+criterion = { version = "0.5", features = ["html_reports"] }
 
 [build-dependencies]
 version_check = "0.9.5"
@@ -72,3 +73,7 @@ signal = ["tokio/signal"]
 task_tracker = ["dep:tokio-util"]
 indexmap = ["dep:indexmap"]
 serde = ["dep:serde"]
+
+[[bench]]
+name = "performance"
+harness = false
