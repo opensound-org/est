@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Deps
 
 - Upgrade `tokio` to `1.45.0` ([](https://github.com/opensound-org/est/commit/))
+- Upgrade `tokio` to `1.45.1` ([](https://github.com/opensound-org/est/commit/))
 
 ## 0.9.0 - 2025-04-25
 
