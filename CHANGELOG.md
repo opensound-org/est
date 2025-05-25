@@ -7,19 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.9.1 - 2025-05-25
+
 ### Fixed
 
-- Fix inconsistent dependency versions ([](https://github.com/opensound-org/est/commit/))
+- Fix inconsistent dependency versions ([99cb9b](https://github.com/opensound-org/est/commit/99cb9bd903ebab7361636c6c422c87243f357e2a))
 
 ### Docs
 
-- (README): Add `DeepWiki` badge ([](https://github.com/opensound-org/est/commit/))
+- (README): Add `DeepWiki` badge ([7a37b4](https://github.com/opensound-org/est/commit/7a37b4416990da1c8ad2dc0e61d9c5455049b541))
 
 ### Deps
 
-- Upgrade `tokio` to `1.45.0` ([](https://github.com/opensound-org/est/commit/))
-- Upgrade `tokio` to `1.45.1` ([](https://github.com/opensound-org/est/commit/))
-- (README): Update `Rust` to `1.87.0` ([](https://github.com/opensound-org/est/commit/))
+- Upgrade `tokio` to `1.45.0` ([0850b2](https://github.com/opensound-org/est/commit/0850b27eaa91e5807d0705fff4d01d11e79f5529))
+- Upgrade `tokio` to `1.45.1` ([efcdc6](https://github.com/opensound-org/est/commit/efcdc68747aef82809dafd5ca8b7f8b41945c2f8))
+- (README): Update `Rust` to `1.87.0` ([547b29](https://github.com/opensound-org/est/commit/547b298208998942e2b8bc54f8ef21df5db48b7d))
 
 ## 0.9.0 - 2025-04-25
 
