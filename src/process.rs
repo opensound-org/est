@@ -170,33 +170,50 @@ impl From<Command> for TokioCommand {
 
 impl Clone for Command {
     fn clone(&self) -> Self {
-        let kill_on_drop = self.as_tokio().map(TokioCommand::get_kill_on_drop);
-        let cmd = self.as_std();
-        let mut cloned = StdCommand::new(cmd.get_program());
-
-        cloned.args(cmd.get_args());
-
-        for (k, v) in cmd.get_envs() {
-            match v {
-                Some(v) => cloned.env(k, v),
-                None => cloned.env_remove(k),
-            };
-        }
-
-        if let Some(current_dir) = cmd.get_current_dir() {
-            cloned.current_dir(current_dir);
-        }
-
-        match kill_on_drop {
-            None => cloned.into(),
-            Some(kill_on_drop) => {
-                let mut cmd: TokioCommand = cloned.into();
-
-                if kill_on_drop {
-                    cmd.kill_on_drop(true);
+        match self {
+            // Fast path for std commands - no need to check kill_on_drop
+            Self::Std(cmd) => {
+                let mut cloned = StdCommand::new(cmd.get_program());
+                cloned.args(cmd.get_args());
+                
+                for (k, v) in cmd.get_envs() {
+                    match v {
+                        Some(v) => cloned.env(k, v),
+                        None => cloned.env_remove(k),
+                    };
                 }
 
-                cmd.into()
+                if let Some(current_dir) = cmd.get_current_dir() {
+                    cloned.current_dir(current_dir);
+                }
+
+                Self::Std(cloned)
+            }
+            // Handle tokio commands with kill_on_drop preservation
+            Self::Tokio(tokio_cmd) => {
+                let kill_on_drop = tokio_cmd.get_kill_on_drop();
+                let cmd = tokio_cmd.as_std();
+                let mut cloned = StdCommand::new(cmd.get_program());
+
+                cloned.args(cmd.get_args());
+
+                for (k, v) in cmd.get_envs() {
+                    match v {
+                        Some(v) => cloned.env(k, v),
+                        None => cloned.env_remove(k),
+                    };
+                }
+
+                if let Some(current_dir) = cmd.get_current_dir() {
+                    cloned.current_dir(current_dir);
+                }
+
+                let mut tokio_cloned: TokioCommand = cloned.into();
+                if kill_on_drop {
+                    tokio_cloned.kill_on_drop(true);
+                }
+
+                Self::Tokio(tokio_cloned)
             }
         }
     }

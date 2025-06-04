@@ -35,6 +35,18 @@ pub trait MapExt<K, Q: ?Sized = K> {
     fn replace_key(&mut self, k1: &Q, k2: K) -> Result<(), ReplaceKeyErr>
     where
         K: Borrow<Q>;
+
+    /// Try to replace an existing key with a new one, returning `true` if successful.
+    ///
+    /// This is a convenience method that returns `true` if the replacement was successful,
+    /// and `false` otherwise. It's useful when you don't need to distinguish between
+    /// different error types.
+    fn try_replace_key(&mut self, k1: &Q, k2: K) -> bool
+    where
+        K: Borrow<Q>,
+    {
+        self.replace_key(k1, k2).is_ok()
+    }
 }
 
 impl<K, Q, V, S> MapExt<K, Q> for HashMap<K, V, S>
@@ -44,19 +56,23 @@ where
     S: BuildHasher,
 {
     fn replace_key(&mut self, k1: &Q, k2: K) -> Result<(), ReplaceKeyErr> {
+        // Check if old key exists first
         if !self.contains_key(k1) {
             return Err(ReplaceKeyErr::OldKeyNotExist);
         }
 
+        // Early return if keys are equal (after confirming old key exists)
         if k1 == k2.borrow() {
             return Ok(());
         }
 
+        // Check if new key already exists
         if self.contains_key(k2.borrow()) {
             return Err(ReplaceKeyErr::NewKeyOccupied);
         }
 
-        let v = self.remove(k1).expect("this should be unreachable");
+        // Remove old key and get value in one operation
+        let v = self.remove(k1).expect("key should exist");
         self.insert(k2, v);
         Ok(())
     }
@@ -68,19 +84,23 @@ where
     Q: Ord + ?Sized,
 {
     fn replace_key(&mut self, k1: &Q, k2: K) -> Result<(), ReplaceKeyErr> {
+        // Check if old key exists first
         if !self.contains_key(k1) {
             return Err(ReplaceKeyErr::OldKeyNotExist);
         }
 
+        // Early return if keys are equal (after confirming old key exists)
         if k1 == k2.borrow() {
             return Ok(());
         }
 
+        // Check if new key already exists
         if self.contains_key(k2.borrow()) {
             return Err(ReplaceKeyErr::NewKeyOccupied);
         }
 
-        let v = self.remove(k1).expect("this should be unreachable");
+        // Remove old key and get value in one operation
+        let v = self.remove(k1).expect("key should exist");
         self.insert(k2, v);
         Ok(())
     }
@@ -157,6 +177,24 @@ mod tests {
         assert!(!map.contains_key("k1"));
         assert_eq!(map["k3"], 123);
         assert_eq!(map["k2"], 456);
+    }
+
+    #[test]
+    fn try_replace_key_hashmap() {
+        let mut map = HashMap::new();
+        map.insert("k1".to_string(), 123);
+        map.insert("k2".to_string(), 456);
+
+        // Test successful replacement
+        assert!(map.try_replace_key("k1", "k3".to_string()));
+        assert!(!map.contains_key("k1"));
+        assert_eq!(map["k3"], 123);
+
+        // Test failed replacement (old key doesn't exist)
+        assert!(!map.try_replace_key("k4", "k5".to_string()));
+
+        // Test failed replacement (new key already exists)
+        assert!(!map.try_replace_key("k3", "k2".to_string()));
     }
 
     #[test]

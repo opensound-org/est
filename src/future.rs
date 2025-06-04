@@ -22,6 +22,15 @@ pub struct WithCancelSignal<F: Future, C: Future> {
     cancel: Pin<Box<C>>,
 }
 
+/// A more efficient version of [`WithCancelSignal`] for [`Unpin`] futures that avoids boxing.
+///
+/// Use [`FutureExt::with_cancel_signal_unpin`] to construct.
+#[derive(Debug)]
+pub struct WithCancelSignalUnpin<F: Future + Unpin, C: Future + Unpin> {
+    future: Option<F>,
+    cancel: Option<C>,
+}
+
 impl<F, C> Future for WithCancelSignal<F, C>
 where
     F: Future,
@@ -36,6 +45,32 @@ where
 
         if let Poll::Ready(o) = Pin::new(&mut self.cancel).poll(cx) {
             return Poll::Ready(Err(o));
+        }
+
+        Poll::Pending
+    }
+}
+
+impl<F, C> Future for WithCancelSignalUnpin<F, C>
+where
+    F: Future + Unpin,
+    C: Future + Unpin,
+{
+    type Output = Result<F::Output, C::Output>;
+
+    fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
+        // Poll the main future first
+        if let Some(ref mut future) = self.future {
+            if let Poll::Ready(o) = Pin::new(future).poll(cx) {
+                return Poll::Ready(Ok(o));
+            }
+        }
+
+        // Poll the cancel signal
+        if let Some(ref mut cancel) = self.cancel {
+            if let Poll::Ready(o) = Pin::new(cancel).poll(cx) {
+                return Poll::Ready(Err(o));
+            }
         }
 
         Poll::Pending
@@ -71,6 +106,42 @@ pub trait FutureExt: Future + Sized {
         WithCancelSignal {
             future: Box::pin(self),
             cancel: Box::pin(cancel),
+        }
+    }
+
+    /// Construct a [`WithCancelSignalUnpin`] Future that avoids boxing for [`Unpin`] futures.
+    /// 
+    /// This is a more efficient version of [`with_cancel_signal`] for futures that implement
+    /// [`Unpin`], as it avoids the heap allocation of boxing.
+    ///
+    /// [`with_cancel_signal`]: FutureExt::with_cancel_signal
+    ///
+    /// # Example
+    ///
+    /// ```
+    /// use est::future::FutureExt;
+    /// use std::future::ready;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let future = ready(42);
+    ///     let cancel = ready(());
+    ///     // Since both are ready immediately, the future should complete first
+    ///     assert!(future.with_cancel_signal_unpin(cancel).await.is_ok());
+    ///
+    ///     // Test with boxed futures (which are Unpin)
+    ///     let future = Box::pin(async { 42 });
+    ///     let cancel = Box::pin(async { () });
+    ///     assert!(future.with_cancel_signal_unpin(cancel).await.is_ok());
+    /// }
+    /// ```
+    fn with_cancel_signal_unpin<C: Future + Unpin>(self, cancel: C) -> WithCancelSignalUnpin<Self, C>
+    where
+        Self: Unpin,
+    {
+        WithCancelSignalUnpin {
+            future: Some(self),
+            cancel: Some(cancel),
         }
     }
 }
@@ -120,6 +191,22 @@ mod tests {
         let cancel = async move { sleep(Duration::from_millis(100)).await };
         let future = async move { sleep(Duration::from_millis(50)).await };
         assert!(future.with_cancel_signal(cancel).await.is_ok());
+    }
+
+    #[tokio::test]
+    async fn with_cancel_signal_unpin() {
+        use std::future::ready;
+
+        // Test cancellation with ready futures (which are Unpin)
+        let cancel = ready(());
+        let future = ready(42);
+        // Since both are ready immediately, the future should complete first
+        assert!(future.with_cancel_signal_unpin(cancel).await.is_ok());
+
+        // Test with async blocks that are pinned
+        let cancel = Box::pin(async { () });
+        let future = Box::pin(async { 42 });
+        assert!(future.with_cancel_signal_unpin(cancel).await.is_ok());
     }
 
     #[tokio::test]
