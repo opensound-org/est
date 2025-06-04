@@ -45,4 +45,4 @@ pub mod task;
 pub mod thread;
 
 #[cfg(feature = "result")]
-pub use result::AnyRes;
+pub use result::{AnyRes, ResultExt};
