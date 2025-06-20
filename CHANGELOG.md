@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Docs
+
+- (README): Update `git-msrv` badge ([](https://github.com/opensound-org/est/commit/))
+
 ## 0.9.1 - 2025-05-25
 
 ### Fixed
