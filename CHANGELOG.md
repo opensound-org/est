@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Deps
 
 - Upgrade `indexmap` to `2.10.0` ([](https://github.com/opensound-org/est/commit/))
+- Upgrade `tokio` to `1.46.1` ([](https://github.com/opensound-org/est/commit/))
 
 ## 0.9.1 - 2025-05-25
 
