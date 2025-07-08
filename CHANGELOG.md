@@ -7,19 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.10.0 - 2025-07-08
+
 ### Added
 
-- (slice): Introduce `SliceExt` trait with `has_dup` method ([](https://github.com/opensound-org/est/commit/))
+- (slice): Introduce `SliceExt` trait with `has_dup` method ([fa37a1](https://github.com/opensound-org/est/commit/fa37a1110144a9813db2dd45cbb7add3f8b29e1b))
 
 ### Docs
 
-- (README): Update `git-msrv` badge ([](https://github.com/opensound-org/est/commit/))
+- (README): Update `git-msrv` badge ([a9dc28](https://github.com/opensound-org/est/commit/a9dc2807d9cdb8d1c22b74c6c86e3b07448820b2))
 
 ### Deps
 
-- Upgrade `indexmap` to `2.10.0` ([](https://github.com/opensound-org/est/commit/))
-- Upgrade `tokio` to `1.46.1` ([](https://github.com/opensound-org/est/commit/))
-- (README): Update `Rust` to `1.88.0` ([](https://github.com/opensound-org/est/commit/))
+- Upgrade `indexmap` to `2.10.0` ([818403](https://github.com/opensound-org/est/commit/818403c192681567b9485dec910c8a7f4f769431))
+- Upgrade `tokio` to `1.46.1` ([be1237](https://github.com/opensound-org/est/commit/be123737c58f356184f06a725895f1542a8a5653))
+- (README): Update `Rust` to `1.88.0` ([067a7e](https://github.com/opensound-org/est/commit/067a7ec5c108b87444e2ef679e46244925008d3d))
 
 ## 0.9.1 - 2025-05-25
 
