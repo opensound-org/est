@@ -36,6 +36,7 @@
 - [`future::FutureExt::with_cancel_signal()`](https://docs.rs/est/latest/est/future/trait.FutureExt.html#tymethod.with_cancel_signal)
 - [`future::IntoFutureWithArgs`](https://docs.rs/est/latest/est/future/trait.IntoFutureWithArgs.html)
 - [`process::Command`](https://docs.rs/est/latest/est/process/enum.Command.html)
+- [`slice::SliceExt::has_dup()`](https://docs.rs/est/latest/est/slice/trait.SliceExt.html#tymethod.has_dup)
 - [`sync::once`](https://docs.rs/est/latest/est/sync/once/index.html)
 - [`task::task_tracker::CloseAndWait::close_and_wait()`](https://docs.rs/est/latest/est/task/task_tracker/trait.CloseAndWait.html#tymethod.close_and_wait)
 - [`task::GracefulTask`](https://docs.rs/est/latest/est/task/graceful/struct.GracefulTask.html)

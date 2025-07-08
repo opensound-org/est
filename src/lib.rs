@@ -34,7 +34,7 @@ pub mod process;
 /// Extensions to the [`std::result`] module.
 #[cfg(feature = "result")]
 pub mod result;
-/// Extensions to the [`slice`] type.
+/// Extensions to the [`std::slice`] module.
 #[cfg(feature = "slice")]
 pub mod slice;
 /// Extensions to the [`std::sync`] & [`tokio::sync`] module.
