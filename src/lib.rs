@@ -7,7 +7,7 @@
 //!
 //! **The default feature will not enable anything** (based on the principle of minimum
 //! dependency). At the same time, each top-level module has a feature flag with the same name
-//! (currently including: `collections`, `future`, `process`, `result`, `sync`, `task`, `thread`).
+//! (currently including: `collections`, `future`, `process`, `result`, `slice`, `sync`, `task`, `thread`).
 //!
 //! There is also a feature flag called `full` that enables all features and introduces all
 //! optional dependencies.
@@ -34,6 +34,9 @@ pub mod process;
 /// Extensions to the [`std::result`] module.
 #[cfg(feature = "result")]
 pub mod result;
+/// Extensions to the [`std::slice`] module.
+#[cfg(feature = "slice")]
+pub mod slice;
 /// Extensions to the [`std::sync`] & [`tokio::sync`] module.
 #[cfg(feature = "sync")]
 pub mod sync;

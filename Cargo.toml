@@ -50,6 +50,7 @@ full = [
   "future",
   "process",
   "result",
+  "slice",
   "sync",
   "task",
   "thread",
@@ -64,6 +65,7 @@ collections = ["dep:thiserror"]
 future = []
 process = ["tokio/process"]
 result = ["dep:anyhow"]
+slice = []
 sync = ["tokio/sync"]
 task = ["future", "sync", "dep:derive_more", "tokio/rt"]
 thread = ["dep:derive_more", "dep:ron"]

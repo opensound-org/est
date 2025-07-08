@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Added
+
+- (slice): Introduce `SliceExt` trait with `has_dup` method ([](https://github.com/opensound-org/est/commit/))
+
 ### Docs
 
 - (README): Update `git-msrv` badge ([](https://github.com/opensound-org/est/commit/))
