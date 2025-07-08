@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - (README): Update `git-msrv` badge ([](https://github.com/opensound-org/est/commit/))
 
+### Deps
+
+- Upgrade `indexmap` to `2.10.0` ([](https://github.com/opensound-org/est/commit/))
+
 ## 0.9.1 - 2025-05-25
 
 ### Fixed
