@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Changed
+
+- (safety): Replace `unwrap` with `expect` to enhance safety and readability ([](https://github.com/opensound-org/est/commit/))
+
 ## 0.10.0 - 2025-07-08
 
 ### Added

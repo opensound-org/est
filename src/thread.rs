@@ -17,7 +17,11 @@ impl From<std::thread::ThreadId> for ThreadId {
         #[serde(rename = "ThreadId")]
         struct Inner(NonZeroU64);
 
-        Self(ron::from_str::<Inner>(&format!("{:?}", value)).unwrap().0)
+        Self(
+            ron::from_str::<Inner>(&format!("{:?}", value))
+                .expect("Should always success")
+                .0,
+        )
     }
 }
 

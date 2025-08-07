@@ -19,7 +19,7 @@ pub struct TaskId(pub NonZeroU64);
 
 impl From<tokio::task::Id> for TaskId {
     fn from(value: tokio::task::Id) -> Self {
-        Self(value.to_string().parse().unwrap())
+        Self(value.to_string().parse().expect("Should always success"))
     }
 }
 
