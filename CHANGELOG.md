@@ -7,19 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.10.1 - 2025-08-09
+
 ### Changed
 
-- (safety): Replace `unwrap` with `expect` to enhance safety and readability ([](https://github.com/opensound-org/est/commit/))
+- (safety): Replace `unwrap` with `expect` to enhance safety and readability ([12d202](https://github.com/opensound-org/est/commit/12d2029921350a8fbe098e36896fe9dd036eec69))
 
 ### Fixed
 
-- (task::task_tracker): Fix the `mismatched_lifetime_syntaxes` warning lint introduced by Rust `1.89.0` ([](https://github.com/opensound-org/est/commit/))
+- (task::task_tracker): Fix the `mismatched_lifetime_syntaxes` warning lint introduced by Rust `1.89.0` ([a6f96d](https://github.com/opensound-org/est/commit/a6f96d39960b9a9ea5614bd8ef29e48605641ed0))
 
 ### Deps
 
-- Upgrade `tokio` to `1.47.1` ([](https://github.com/opensound-org/est/commit/))
-- Upgrade `tokio-util` to `0.7.16` ([](https://github.com/opensound-org/est/commit/))
-- (README): Update `Rust` to `1.89.0` ([](https://github.com/opensound-org/est/commit/))
+- Upgrade `tokio` to `1.47.1` ([711b5a](https://github.com/opensound-org/est/commit/711b5ae3c924dd535cf240e8d79adc331b547cc4))
+- Upgrade `tokio-util` to `0.7.16` ([c90622](https://github.com/opensound-org/est/commit/c90622f18f5625d338811c3201d6f49dd31e5cb6))
+- (README): Update `Rust` to `1.89.0` ([5c499c](https://github.com/opensound-org/est/commit/5c499ce1692d2b74e06ebed8c6dd9c110e34b05c))
 
 ## 0.10.0 - 2025-07-08
 
