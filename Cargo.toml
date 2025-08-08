@@ -31,11 +31,11 @@ ron = { version = "0.10.1", optional = true }
 serde = { version = "1.0.219", features = ["derive"], optional = true }
 thiserror = { version = "2.0.12", optional = true }
 tokio = { version = "1.47.1", features = ["macros"], optional = true }
-tokio-util = { version = "0.7.15", features = ["rt"], optional = true }
+tokio-util = { version = "0.7.16", features = ["rt"], optional = true }
 
 [dev-dependencies]
 tokio = { version = "1.47.1", features = ["macros", "rt-multi-thread", "test-util", "time"] }
-tokio-util = { version = "0.7.15", features = ["time"] }
+tokio-util = { version = "0.7.16", features = ["time"] }
 
 [build-dependencies]
 version_check = "0.9.5"
