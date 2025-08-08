@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - (safety): Replace `unwrap` with `expect` to enhance safety and readability ([](https://github.com/opensound-org/est/commit/))
 
+### Deps
+
+- Upgrade `tokio` to `1.47.1` ([](https://github.com/opensound-org/est/commit/))
+
 ## 0.10.0 - 2025-07-08
 
 ### Added
