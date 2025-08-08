@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Upgrade `tokio` to `1.47.1` ([](https://github.com/opensound-org/est/commit/))
 - Upgrade `tokio-util` to `0.7.16` ([](https://github.com/opensound-org/est/commit/))
+- (README): Update `Rust` to `1.89.0` ([](https://github.com/opensound-org/est/commit/))
 
 ## 0.10.0 - 2025-07-08
 
