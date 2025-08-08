@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - (safety): Replace `unwrap` with `expect` to enhance safety and readability ([](https://github.com/opensound-org/est/commit/))
 
+### Fixed
+
+- (task::task_tracker): Fix the `mismatched_lifetime_syntaxes` warning lint introduced by Rust `1.89.0` ([](https://github.com/opensound-org/est/commit/))
+
 ### Deps
 
 - Upgrade `tokio` to `1.47.1` ([](https://github.com/opensound-org/est/commit/))

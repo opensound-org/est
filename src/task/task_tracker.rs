@@ -7,11 +7,11 @@ pub use tokio_util::task::TaskTracker;
 /// [`close`]: TaskTracker::close
 /// [`wait`]: TaskTracker::wait
 pub trait CloseAndWait {
-    fn close_and_wait(&self) -> TaskTrackerWaitFuture;
+    fn close_and_wait(&self) -> TaskTrackerWaitFuture<'_>;
 }
 
 impl CloseAndWait for TaskTracker {
-    fn close_and_wait(&self) -> TaskTrackerWaitFuture {
+    fn close_and_wait(&self) -> TaskTrackerWaitFuture<'_> {
         self.close();
         self.wait()
     }
