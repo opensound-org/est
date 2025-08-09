@@ -693,6 +693,36 @@ pub fn once_event() -> (OnceTrigger, OnceWaiter) {
     (OnceTrigger(send), OnceWaiter { recv, triggered })
 }
 
+/// Creates multiple independent one-time events.
+///
+/// This is a convenience function for creating multiple independent trigger-waiter pairs.
+/// Each trigger can only notify its corresponding waiter.
+///
+/// # Examples
+///
+/// ```
+/// use est::sync::once::once_events;
+///
+/// #[tokio::main]
+/// async fn main() {
+///     let events = once_events(3);
+///
+///     for (i, (trigger, waiter)) in events.into_iter().enumerate() {
+///         tokio::spawn(async move {
+///             if waiter.await {
+///                 println!("waiter {} received event", i);
+///             }
+///         });
+///         
+///         // Trigger each event independently
+///         trigger.trigger();
+///     }
+/// }
+/// ```
+pub fn once_events(count: usize) -> Vec<(OnceTrigger, OnceWaiter)> {
+    (0..count).map(|_| once_event()).collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
